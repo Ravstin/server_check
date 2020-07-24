@@ -4,8 +4,6 @@ server="49.12.1.242"
 
 op_port=(4000 4321 8082 22 80)
 cl_port=(3306)
-RMP_addr1="116.203.164.16 55555"
-RMP_addr2="88.99.84.2 55555"
 
 op_len=${#op_port[@]}
 cl_len=${#cl_port[@]}
@@ -39,26 +37,6 @@ for (( x=0; x<$cl_len; x++ )); do
                 echo "Port "${cl_port[x]}" is open on $server - Failed"
         fi
         done
-
-echo
-echo "Checking TASSTA License Server availability:"
-echo
-
-nc -zvn $RMP_addr1 &> /dev/null
-res=$?
-if [ "res" != 0 ]; then
-        echo "central.tassta.com is open on $server - Succesful"
-else
-        echo "central.tassta.com is closed on $server - Failed"
-fi
-
-nc -zvn $RMP_addr2 &> /dev/null
-res=$?
-if [ "res" != 0 ]; then
-        echo "central1.tassta.com is open on $server - Succesful"
-else
-        echo "central1.tassta.com is closed on $server - Failed"
-fi
 
 echo
 
