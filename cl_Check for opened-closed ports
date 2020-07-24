@@ -13,9 +13,9 @@ for (( x=0; x<$op_len; x++ )); do
         result=$?
         0 &> /dev/null
         if [ "$result" != 0 ]; then
-                echo "${op_port[x]}" is closed on $server - Failed
+                echo "Port "${op_port[x]}" is closed on $server - Failed"
         else
-                echo "${op_port[x]}" is open on $server - Successful
+                echo "Port "${op_port[x]}" is open on $server - Successful"
         fi
         done
 
@@ -26,9 +26,9 @@ for (( x=0; x<$cl_len; x++ )); do
         result=$?
         0 &> /dev/null
         if [ "$result" != 0 ]; then
-                echo "${cl_port[x]}" is closed on $server - Succesful
+                echo "Port "${cl_port[x]}" is closed on $server - Succesful"
         else
-                echo "${cl_port[x]}" is open on $server - Failed
+                echo "Port "${cl_port[x]}" is open on $server - Failed"
         fi
         done
 
