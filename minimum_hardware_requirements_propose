@@ -1,0 +1,37 @@
+#!/bin/bash
+#------------------------------------------------------------------------
+#TASSTA T.(Lion/Brother) Compatibility Tool for Deployment, Server-Script
+#------------------------------------------------------------------------
+
+echo "TASSTA T.Lion/Brother Compatibility Tool. This tool checks the requirements on hardware, software, system environment, and security configurations, needed, in order to run the T.Lion/Brother Server. See: http://kb.tassta.com:8090/display/PHC/System+requirements "
+
+echo "Starting Minimum System Requirement Check"
+
+if [[ $(uname -p) = x86_64 ]];
+then
+    echo "[ARCHITECTURE: PASSED] - As required, you are running a 64 Bit x86 system."
+else 
+    echo "[ARCHITECTURE: NOT PASSED] - Other arcitectures are not supported. Only x86_64 supported."
+fi
+
+if [[ $(nproc --all) < 2 ]];
+then
+    echo "[CPU: NOT PASSED] - CPU is not meeting the minimum requirements. More 2 than cores are needed."
+else 
+    echo "[CPU: PASSED] - Your CPU has" "$(nproc --all)" "cores, which meets the minimum requirement."
+fi
+
+if [[ "$(free -m | grep 'Mem' | awk '{print $2}')" < 5000 ]];
+then
+    echo "[RAM: NOT PASSED] - More than 5000MB (5GB) system memory are needed to run the server properly."
+else 
+    echo "[RAM: PASSED] - The available RAM is" "$(free -m | grep 'Mem' | awk '{print $2}')" "MB, which meets the minimum requirement."
+fi
+
+if [[ "$(df -hT / | grep '/' | awk '{print $3}' | tr -d G | cut -c1-1)" < 20 ]];
+then
+    echo "[DISK: NOT PASSED] - More than 20 GB disk space are needed to run the server properly."
+else 
+    echo "[DISK: PASSED] - The available disk space is" "$(df -hT / | grep '/' | awk '{print $3}' | tr -d G)" "GB, which meets the minimum requirement."
+fi
+
