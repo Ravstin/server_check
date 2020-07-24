@@ -7,7 +7,7 @@ echo "TASSTA T.Lion/Brother Compatibility Tool. This tool checks the requirement
 
 echo "Starting Minimum System Requirement Check"
 
-if [[ $(uname -p) = x86_64 ]];
+if [[ $(arch) = x86_64 ]];
 then
     echo "[ARCHITECTURE: PASSED] - As required, you are running a 64 Bit x86 system."
 else 
