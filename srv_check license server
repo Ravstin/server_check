@@ -1,0 +1,28 @@
+#!/bin/bash
+
+RMP_addr1="116.203.164.16 55555"
+RMP_addr2="88.99.84.2 55555"
+
+echo
+echo "Checking TASSTA License Server availability:"
+echo
+
+nc -zvn $RMP_addr1 &> /dev/null
+res=$?
+if [ "res" != 0 ]; then
+        echo "central.tassta.com is open - Succesful"
+else
+        echo "central.tassta.com is closed - Failed"
+fi
+
+nc -zvn $RMP_addr2 &> /dev/null
+res=$?
+if [ "res" != 0 ]; then
+        echo "central1.tassta.com is open - Succesful"
+else
+        echo "central1.tassta.com is closed - Failed"
+fi
+
+echo
+
+exit
