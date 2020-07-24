@@ -1,8 +1,0 @@
-#!/bin/bash
-echo -e "-------------------------------System Information----------------------------"
-echo -e "Architecture:\t\t"`arch` >> file.txt
-echo -e "Processor Name:\t\t"`awk -F':' '/^model name/ {print $2}' /proc/cpuinfo | uniq | sed -e 's/^[ \t]*//'` >> file.txt
-echo -e "Processor Cores:\t"`awk -F':' '/^cpu cores/ {print $2}' /proc/cpuinfo | uniq | sed -e 's/^[ \t]*//'` >> file.txt
-echo -e "RAM:\t\t\t"`awk -F':' '/^MemTotal/ {print $2}' /proc/meminfo | uniq | sed -e 's/^[ \t]*//'` >> file.txt
-echo -e "Free Space:\t\t"`df -h --output=avail /|grep -v Avail` >> file.txt
-echo -e "Operating System:\t"`hostnamectl | grep "Operating System" | cut -d ' ' -f5-` >> file.txt
