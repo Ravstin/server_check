@@ -4,9 +4,11 @@ server="49.12.1.242"
 
 op_port=(4000 4321 8082 22 80)
 cl_port=(3306)
+Lion_port=($(seq 65000 1 65099))
 
 op_len=${#op_port[@]}
 cl_len=${#cl_port[@]}
+Lion_len=${#Lion_port[@]}
 
 echo
 echo "Checking for opened ports:"
@@ -37,6 +39,21 @@ for (( x=0; x<$cl_len; x++ )); do
                 echo "Port "${cl_port[x]}" is open on $server - Failed"
         fi
         done
+
+echo
+echo "Checking T.Lion ports:"
+echo                                                                                                 
+
+for (( x=0; x<$Lion_len; x++ )); do
+        nc -zvn $server ${Lion_port[x]} &> /dev/null
+        result=$?
+        0 &> /dev/null
+        if [ "$result" != 0 ]; then
+                break                                                                                
+        else
+                echo "Port "${Lion_port[x]}" is open on $server - Succesful"
+        fi
+done
 
 echo
 
