@@ -31,7 +31,7 @@ else
     echo "[RAM: PASSED] - The available RAM is" "$(free -m | grep 'Mem' | awk '{print $2}')" "MB, which meets the minimum requirement."
 fi
 
-if [[ "$(df -hT / | grep '/' | awk '{print $3}' | tr -d G | cut -c1-1)" -lt 20 ]];
+if [[ "$(df -hT / | grep '/' | awk '{print $3}' | tr -d G | awk '{printf("%d\n",$1 + 0.5)}' )" -lt 20 ]];
 then
     echo "[DISK: NOT PASSED] - More than 20 GB disk space are needed to run the server properly. The available disk space is" "$(df -hT / | grep '/' | awk '{print $3}' | tr -d G)" "GB."
 else 
