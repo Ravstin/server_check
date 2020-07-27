@@ -58,8 +58,6 @@ done
 if [ -z "$arbitrator" ]; then
   break
 elif [[ "$arbitrator" =~ ^[0-9]+$ ]]; then
-  echo LOL INTEGER
-  echo $arbitrator
   nc -zv $server $arbitrator &> /dev/null
   result=$?
   0 &> /dev/null
