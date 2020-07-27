@@ -1,0 +1,73 @@
+#!/bin/bash
+#------------------------------------------------------------------------
+#TASSTA T.(Lion/Brother) Compatibility Tool for Deployment, Server-Script
+#------------------------------------------------------------------------
+
+echo "TASSTA T.Lion/Brother Compatibility Tool. This tool checks the requirements on hardware, software, system environment, and security configurations, needed, in order to run the T.Lion/Brother Server. See: http://kb.tassta.com:8090/display/PHC/System+requirements "
+
+echo "Starting Minimum System Requirement Check"
+
+echo "[Time: INFO] -" "$(date)"
+
+if [[ "$(hostnamectl | grep "Operating System" | cut -d ' ' -f5-)" = "Debian GNU/Linux 9 (stretch)"  ]];
+then
+    echo "[OS: PASSED] - Operating System Debian 9 (Supported) detected."
+else 
+    echo "[OS: NOT PASSED] - Only Debian 9 as host os is supported. Leaving."
+    exit 1
+fi
+
+if [ -d /var ] && [ -d /home ] && [ -d /tmp ]
+then
+    echo "[Filesystem: INFO] - Needed Directories (/tmp, /home, /var) found! "
+else
+    echo "[Filesystem: INFO] - Please recheck your partitions / file-system!"
+fi
+
+if [[ $(dpkg-query -W -f='${Status}' apparmor 2>/dev/null | grep -c "ok installed") -eq 1 ]];
+then
+    echo "[Security: INFO] - Installed AppArmor package detected!"
+    if (systemctl is-active --quiet apparmor.service)
+    then
+        echo "[Security: NOT PASSED] - AppArmor is still active! It must be disabled or set to permissive mode."
+    else
+        echo "[Security: PASSED] - AppArmor is not running."
+    fi
+else
+    echo "[Security: INFO] - AppArmor is not installed."
+fi
+
+if [[ $(dpkg-query -W -f='${Status}' selinux-basics 2>/dev/null | grep -c "ok installed") -eq 1 ]];
+then
+    echo "[Security: INFO] - Installed SELinux package detected!"
+    if [["$(getenforce)" = "Enforcing"]];
+    then
+        echo "[Security: NOT PASSED] - SELinux is still active! It must be disabled or set to permissive mode."
+    else
+        echo "[Security: PASSED] - SELinux is not running."
+    fi
+else
+    echo "[Security: INFO] - SELinux is not installed."
+fi
+
+if [[ $(dpkg-query -W -f='${Status}' bash 2>/dev/null | grep -c "ok installed") -eq 1 ]];
+then
+    echo "[Shell: PASSED] - Bash is installed with version" "$(echo "$BASH_VERSION")""."
+else
+    echo "[Shell: NOT PASSED] - No Bash installation found!"
+fi
+
+if [[ $(dpkg-query -W -f='${Status}' openssh-client 2>/dev/null | grep -c "ok installed") -eq 1 ]];
+then
+    echo "[SSH_Client: PASSED] - OpenSSH client is installed."
+else
+    echo "[SSH_Client: NOT PASSED] - OpenSSH client is missing."
+fi
+
+if [[ $(dpkg-query -W -f='${Status}' openssh-server 2>/dev/null | grep -c "ok installed") -eq 1 ]];
+then
+    echo "[SSH_Server: PASSED] - OpenSSH Server is installed."
+else
+    echo "[SSH_Server: NOT PASSED] - No OpenSSH Server installation found!"
+fi
+
