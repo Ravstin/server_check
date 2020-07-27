@@ -1,0 +1,40 @@
+#!/bin/bash
+
+##################################################
+# Force user to input server's name / IP address #
+##################################################
+# Arguments for script are following
+# arg1 = TBS/TLS address
+# arg2 = arbitrator address
+##################################################
+
+inp=$1
+inp2=$2
+
+if [ -z "$inp" ]; then
+  echo "There's no ip in arguments, please input ip!"
+  read server
+  if [ -z "$server" ]; then
+    exit
+  fi
+else
+  server=$1
+fi
+
+# Now we can use $server as address for TLS or TBS
+
+if [ -z "$inp2" ]; then
+  echo "There's no ip/port in arguments, please input ip/port!"
+  read arbitrator
+  if [ -z "$arbitrator" ]; then
+    exit
+  fi
+else
+  arbitrator=$2
+fi
+
+# Arbitrator as $arbitrator as well
+
+exit
+
+##################################################
