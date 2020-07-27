@@ -11,26 +11,26 @@ if [[ $(arch) = x86_64 ]];
 then
     echo "[ARCHITECTURE: PASSED] - As required, you are running a 64 Bit x86 system."
 else 
-    echo "[ARCHITECTURE: NOT PASSED] - Other arcitectures are not supported. Only x86_64 supported."
+    echo "[ARCHITECTURE: NOT PASSED] - Other architectures are not supported. Only x86_64 supported."
 fi
 
-if [[ $(nproc --all) < 2 ]];
+if [[ $(nproc --all) -lt 2 ]];
 then
-    echo "[CPU: NOT PASSED] - CPU is not meeting the minimum requirements. More 2 than cores are needed."
+    echo "[CPU: NOT PASSED] - CPU" "[$(echo -e ""`awk -F':' '/^model name/ {print $2}' /proc/cpuinfo | uniq | sed -e 's/^[ \t]*//'`)]" "is not meeting the minimum requirements with" "$(nproc --all)" "core(s). More 2 than cores are needed. If a VM is used, check core allocation."
 else 
-    echo "[CPU: PASSED] - Your CPU has" "$(nproc --all)" "cores, which meets the minimum requirement."
+    echo "[CPU: PASSED] - Your CPU" "[$(echo -e ""`awk -F':' '/^model name/ {print $2}' /proc/cpuinfo | uniq | sed -e 's/^[ \t]*//'`)]" "has" "$(nproc --all)" "cores, which meets the minimum requirement."
 fi
 
-if [[ "$(free -m | grep 'Mem' | awk '{print $2}')" < 5000 ]];
+if [[ "$(free -m | grep 'Mem' | awk '{print $2}')" -lt 5000 ]];
 then
-    echo "[RAM: NOT PASSED] - More than 5000MB (5GB) system memory are needed to run the server properly."
+    echo "[RAM: NOT PASSED] - More than 5000MB (5GB) system memory are needed to run the server properly. Only" "$(free -m | grep 'Mem' | awk '{print $2}')" "MB usable RAM found!"
 else 
     echo "[RAM: PASSED] - The available RAM is" "$(free -m | grep 'Mem' | awk '{print $2}')" "MB, which meets the minimum requirement."
 fi
 
-if [[ "$(df -hT / | grep '/' | awk '{print $3}' | tr -d G | cut -c1-1)" < 20 ]];
+if [[ "$(df -hT / | grep '/' | awk '{print $3}' | tr -d G | cut -c1-1)" -lt 20 ]];
 then
-    echo "[DISK: NOT PASSED] - More than 20 GB disk space are needed to run the server properly."
+    echo "[DISK: NOT PASSED] - More than 20 GB disk space are needed to run the server properly. The available disk space is" "$(df -hT / | grep '/' | awk '{print $3}' | tr -d G)" "GB."
 else 
     echo "[DISK: PASSED] - The available disk space is" "$(df -hT / | grep '/' | awk '{print $3}' | tr -d G)" "GB, which meets the minimum requirement."
 fi
