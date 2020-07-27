@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# User input for server hostname / IP
+# User input for server IP
 
 inp=$1
 
@@ -57,16 +57,16 @@ echo "Checking T.Lion tcp ports:"
 echo
 
 for (( x=0; x<$Lion_len; x++ )); do
-        nc -zv $server ${Lion_port[x]} &> /dev/null
-        result=$?
-        0 &> /dev/null
-        if [ "$result" != 0 ]; then
-#               echo "Port "${Lion_port[x]}" is closed on $server - Failed"
-                break
+    nc -zv $server ${Lion_port[x]} &> /dev/null
+    result=$?
+    0 &> /dev/null
+    if [ "$result" != 0 ]; then
+#       echo "Port "${Lion_port[x]}" is closed on $server - Failed"
+        break
 
-        else
-                echo "Port "${Lion_port[x]}" is open on $server - Succesful"
-        fi
+    else
+        echo "Port "${Lion_port[x]}" is open on $server - Succesful"
+    fi
 done
 
 echo
@@ -74,16 +74,18 @@ echo "Checking T.Lion udp ports:"
 echo
 
 for (( x=0; x<$Lion_len; x++ )); do
-        nc -uzv $server ${Lion_port[x]} &> /dev/null
-        result=$?
-        0 &> /dev/null
-        if [ "$result" != 0 ]; then
+    nc -uzv $server ${Lion_port[x]} &> /dev/null
+    result=$?
+    0 &> /dev/null
+    if [ "$result" != 0 ]; then
 #               echo "UDP port "${Lion_port[x]}" is closed on $server - Failed"
-                break
+        break
 
-        else
-                echo "UDP port "${Lion_port[x]}" is open on $server - Succesful"
-        fi
+    else
+        echo "UDP port "${Lion_port[x]}" is open on $server - Succesful"
+    fi
 done
+
+echo
 
 exit
