@@ -1,0 +1,82 @@
+#!/bin/bash
+
+##################################################
+# Force user to input server's name / IP address #
+##################################################
+# Arguments for script are following             #
+# arg1 = TBS/TLS address                         #
+# arg2 = arbitrator address                      #
+##################################################
+
+inp=$1
+inp2=$2
+
+if [ -z "$inp" ]; then
+  echo "There's no T.Lion/T.Brother ip in arguments, please input ip!"
+  read server
+  if [ -z "$server" ]; then
+    exit
+  fi
+else
+  server=$1
+fi
+
+# Now we can use $server as address for TLS or TBS
+
+if [ -z "$inp2" ]; then
+  echo "There's no arbitrator ip/port in arguments, please input ip/port!"
+  read arbitrator
+  if [ -z "$arbitrator" ]; then
+    exit
+  fi
+else
+  arbitrator=$2
+fi
+
+# Arbitrator as $arbitrator as well
+
+
+srv_pts=(4567 4568 4444 13000 27017)
+srv_len=${#srv_pts[@]}
+#diap=$(seq 1024 1 65536)
+
+# Checking ports on server, 13000 - arbitrator
+
+for (( x=0; x<$srv_len; x++ )); do
+  nc -zv $server ${srv_pts[x]} &> /dev/null
+  result=$?
+  0 &> /dev/null
+  if [ "$result" != 0 ]; then
+    echo "Port "${srv_pts[x]}" is closed on $server - Failed"
+  else
+    echo "Port "${srv_pts[x]}" is open on $server - Successful"
+  fi
+done
+
+# Checking arbitrator or TLS/TBS port of it
+
+if [ -z "$arbitrator" ]; then
+  break
+elif [[ "$arbitrator" =~ ^[0-9]+$ ]]; then
+  echo LOL INTEGER
+  echo $arbitrator
+  nc -zv $server $arbitrator &> /dev/null
+  result=$?
+  0 &> /dev/null
+  if [ "$result" != 0 ]; then
+    echo "Port "$arbitrator" is closed on $server - Failed"
+  else
+    echo "Port "$arbitrator" is open on $server - Successful"
+  fi
+else 
+  nc -zv $arbitrator 13000 &> /dev/null
+  result=$?
+  0 &> /dev/null
+  if [ "$result" != 0 ]; then
+    echo "Port "13000" is closed on $server - Failed"
+  else
+    echo "Port "13000" is open on $server - Successful"
+  fi
+fi
+
+exit
