@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# User input for server IP
+# User input for server hostname / IP
 
 inp=$1
 
