@@ -71,9 +71,9 @@ else
   result=$?
   0 &> /dev/null
   if [ "$result" != 0 ]; then
-    echo "Port "13000" is closed on $server - Failed"
+    echo "Port "13000" is closed on $arbitrator - Failed"
   else
-    echo "Port "13000" is open on $server - Successful"
+    echo "Port "13000" is open on $arbitrator - Successful"
   fi
 fi
 
