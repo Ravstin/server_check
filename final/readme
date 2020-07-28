@@ -1,0 +1,14 @@
+2 scripts to check if TLS or TBS server meet minimum system requirements.
+
+server-script.sh arg1 arg2
+
+Runs on TBS/TLS, checks if hardware and software are relevant to install TASSTA, opens ports which are needed for proper functionality, checks if TLS or TBS have opened ports to communicate with other node and/or arbitrator, accessibility of license servers.
+
+arg1 - for TBS/TLS hostname/IP
+arg2 - for arbitrator hostname/IP or port, if arg1 is hostname of it, localhost available. (would check 13000 port of arg1 if skipped)
+
+client-script.sh arg1
+
+Runs on any machine except for server - checking required ports for proper work of TLS/TBS
+
+arg1 - for TBS/TLS hostname/IP
