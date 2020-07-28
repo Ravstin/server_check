@@ -1,1 +1,11 @@
-
+#!/bin/bash
+# ENABLE FIREWALL RULES FOR TLS\TBS
+sudo ufw --force enable
+ufw allow 6500:6550/tcp
+ufw allow 6500:6550/udp
+ufw allow 4000/tcp
+ufw allow 4321/tcp
+ufw allow 8082/tcp
+ufw allow 80/tcp
+ufw allow 22/tcp
+ufw deny mysql
