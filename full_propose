@@ -4,9 +4,9 @@
 #TASSTA T.(Lion/Brother) Compatibility Tool for Deployment, Server-Script
 #------------------------------------------------------------------------
 
-echo
-
 echo "TASSTA T.Lion/Brother Compatibility Tool. This tool checks the requirements on hardware, software, system environment, and security configurations, needed, in order to run the T.Lion/Brother Server. See: http://kb.tassta.com:8090/display/PHC/System+requirements "
+
+echo
 
 echo "Starting Minimum System Requirement Check"
 
