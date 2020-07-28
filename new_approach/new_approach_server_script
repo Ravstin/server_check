@@ -1,1 +1,11 @@
+#!/bin/bash
 
+#------------------------------------------------------------------------
+#TASSTA T.(Lion/Brother) Compatibility Tool for Deployment, Server-Script
+#------------------------------------------------------------------------
+
+echo $(arch) >> $(date --iso-8601)-Log_Server_Script.txt
+echo $(nproc --all) >> $(date --iso-8601)-Log_Server_Script.txt
+echo -e ""`awk -F':' '/^model name/ {print $2}' /proc/cpuinfo | uniq | sed -e 's/^[ \t]*//'` >> $(date --iso-8601)-Log_Server_Script.txt
+echo $(free -m | grep 'Mem' | awk '{print $2}') >> $(date --iso-8601)-Log_Server_Script.txt
+echo $(df -hT / | grep '/' | awk '{print $3}' | tr -d G | awk '{printf("%d\n",$1 + 0.5)}' ) >> $(date --iso-8601)-Log_Server_Script.txt
