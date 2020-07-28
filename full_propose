@@ -67,7 +67,7 @@ if [ -z "$inp2" ]; then
   echo "There's no arbitrator ip/port in arguments, please input ip/port!"
   read arbitrator
   if [ -z "$arbitrator" ]; then
-    exit
+    break
   fi
 else
   arbitrator=$2
@@ -75,9 +75,8 @@ fi
 
 # Arbitrator as $arbitrator as well
 
-srv_pts=(4567 4568 4444 13000 27017)
+srv_pts=(4567 4568 4444 27017)
 srv_len=${#srv_pts[@]}
-#diap=$(seq 1024 1 65536)
 
 # Checking ports on server, 13000 - arbitrator
 
