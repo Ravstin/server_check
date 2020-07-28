@@ -1,4 +1,4 @@
-2 scripts to check if TLS or TBS server meet minimum system requirements.
+2 scripts to check if TLS or TBS meet minimum system requirements.
 
 server-script.sh arg1 arg2
 
